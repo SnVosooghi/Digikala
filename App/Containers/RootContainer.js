@@ -1,34 +1,34 @@
-import React, { Component } from 'react'
-import { View, StatusBar } from 'react-native'
-import ReduxNavigation from '../Navigation/ReduxNavigation'
-import { connect } from 'react-redux'
-import StartupActions from '../Redux/StartupRedux'
-import ReduxPersist from '../Config/ReduxPersist'
+import * as React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import Login from './Login'
+import Home from './Home'
+import CategoryList from './CategoryList';
+import CategoryMovies from './CategoryMovies'
 
-// Styles
-import styles from './Styles/RootContainerStyles'
+const Stack = createStackNavigator();
+const AppStack = createStackNavigator();
+const AuthStack = createStackNavigator()
 
-class RootContainer extends Component {
-  componentDidMount () {
-    // if redux persist is not active fire startup action
-    if (!ReduxPersist.active) {
-      this.props.startup()
-    }
-  }
-
-  render () {
-    return (
-      <View style={styles.applicationView}>
-        <StatusBar barStyle='light-content' />
-        <ReduxNavigation />
-      </View>
-    )
-  }
+function AppComponent() {
+  return (
+    <AppStack.Navigator>
+      <AppStack.Screen name="Home" component={Home} />
+      <AppStack.Screen name="CategoryList" component={CategoryList} />
+      <AppStack.Screen name="CategoryMovies" component={CategoryMovies} />
+    </AppStack.Navigator>
+  )
 }
 
-// wraps dispatch to create nicer functions to call within our component
-const mapDispatchToProps = (dispatch) => ({
-  startup: () => dispatch(StartupActions.startup())
-})
+export default function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator screenOptions={{ headerShown: false }} >
 
-export default connect(null, mapDispatchToProps)(RootContainer)
+        <Stack.Screen name="AppComponent" component={AppComponent} />
+        <Stack.Screen name="Login" component={Login} />
+
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}

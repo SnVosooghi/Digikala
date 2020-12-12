@@ -13,6 +13,7 @@ const metrics = {
   doubleSection: 50,
   horizontalLineHeight: 1,
   screenWidth: width < height ? width : height,
+  fullWidth: width < height ? .8 * width : .8 *height,
   screenHeight: width < height ? height : width,
   navBarHeight: (Platform.OS === 'ios') ? 64 : 54,
   buttonRadius: 4,
